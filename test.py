@@ -93,7 +93,7 @@ class TestBst(unittest.TestCase):
 		self.assertEqual(self.bst.root.right.left.right.quantity, 2)	
 
 	def test_get_min_element(self):
-		min_element = self.filled_bst_zero.get_min_element()
+		min_element = self.filled_bst_zero.get_and_remove_min_element()
 		self.assertEqual(min_element.data.avarice, 0)
 		self.assertEqual(min_element.data.daily_norm, 0)
 
@@ -101,12 +101,12 @@ class TestBst(unittest.TestCase):
 		min_assert = Hamster(1, 1)	
 		self.bst.add(min_assert)
 		self.bst.add(Hamster(1, 2))
-		min_element = self.bst.get_min_element()
+		min_element = self.bst.get_and_remove_min_element()
 		self.assertEqual(min_element.data, min_assert)
 		
 	def test_remove_min_element_unique(self):
-		self.filled_bst_zero.remove_min_element()
-		new_min_element = self.filled_bst_zero.get_min_element()
+		self.filled_bst_zero.get_and_remove_min_element()
+		new_min_element = self.filled_bst_zero.get_and_remove_min_element()
 		self.assertEqual(new_min_element.data.daily_norm, 0)
 		self.assertEqual(new_min_element.data.avarice, 1)
 
@@ -114,15 +114,15 @@ class TestBst(unittest.TestCase):
 		new_min_element_assert = Hamster(1, 2)
 		self.bst.add(Hamster(1, 1))
 		self.bst.add(new_min_element_assert)
-		self.bst.remove_min_element()
-		new_min_element = self.bst.get_min_element().data
-		self.assertEqual(self.bst.root.data, new_min_element_assert)
-		self.assertEqual(self.bst.root.data, new_min_element)
+		self.bst.get_and_remove_min_element()
+		new_min_element = self.bst.get_and_remove_min_element().data
+		self.assertEqual(new_min_element, new_min_element_assert)
+		self.assertEqual(self.bst.root, None)
 
 	def test_remove_min_element_not_unique(self):
 		self.filled_bst_zero.add(Hamster(0, 0))
-		self.filled_bst_zero.remove_min_element()
-		new_min_element = self.filled_bst_zero.get_min_element()
+		self.filled_bst_zero.get_and_remove_min_element()
+		new_min_element = self.filled_bst_zero.get_and_remove_min_element()
 		self.assertEqual(new_min_element.data.daily_norm, 0)
 		self.assertEqual(new_min_element.data.avarice, 0)
 
@@ -130,8 +130,8 @@ class TestBst(unittest.TestCase):
 		self.bst.add(Hamster(1, 1))
 		self.bst.add(Hamster(1, 2))
 		self.bst.add(Hamster(1, 1))
-		self.bst.remove_min_element()
-		new_min_element = self.bst.get_min_element().data
+		self.bst.get_and_remove_min_element()
+		new_min_element = self.bst.get_and_remove_min_element().data
 		self.assertEqual(new_min_element.daily_norm, 1)
 		self.assertEqual(new_min_element.avarice, 1)
 
@@ -146,8 +146,9 @@ class TestBst(unittest.TestCase):
 
 	def test_output_data(self):
 		result = 15
-		output_data('io/test/test_out.out', result)
-		with open('io/test/test_out.out', 'r') as file:
+		file_path = 'io/test/test_out.out'
+		output_data(file_path, result)
+		with open(file_path, 'r') as file:
 			assert_result = int(file.readline())
 		self.assertEqual(assert_result, result)
 

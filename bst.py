@@ -37,15 +37,13 @@ class BST:
                 current.quantity += 1
                 break
 
-    def get_min_element(self):
+    def get_and_remove_min_element(self):
         current = self.root
         while True:
             if current.left is None:
-                return current
+                min_element = current
+                break
             current = current.left
-
-    def remove_min_element(self):
-        min_element = self.get_min_element()
 
         if min_element.quantity == 1:
             if min_element.right is not None:
@@ -64,3 +62,6 @@ class BST:
                     min_element.parent = None
         else:
             min_element.quantity -= 1
+
+        return min_element
+        

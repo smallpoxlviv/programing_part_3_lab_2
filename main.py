@@ -8,14 +8,13 @@ def main(file_in):
     total_daily_norm = 0
 
     while total_hamsters < hamsters_count:
-        current_hamster = hamster_bst.get_min_element().data
+        current_hamster = hamster_bst.get_and_remove_min_element().data
         total_daily_norm += current_hamster.daily_norm
         total_avarice += current_hamster.avarice
 
         if total_daily_norm + total_avarice*total_hamsters > stock:
             break
 
-        hamster_bst.remove_min_element()
         total_hamsters += 1
     return total_hamsters
 
@@ -39,10 +38,4 @@ if __name__ == "__main__":
     output_data(file_out_1, str(result_1))
     output_data(file_out_2, str(result_2))
     output_data(file_out_3, str(result_3))
-
-
-
-
-
-
-
+    
