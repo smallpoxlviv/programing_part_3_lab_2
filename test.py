@@ -34,7 +34,6 @@ class TestBst(unittest.TestCase):
 	def setUp(self):
 		self.bst = BST(lambda hamster: (hamster.avarice, hamster.daily_norm))
 		self.filled_bst_zero = get_filled_bst_zero()
-		self.a = 0
 
 	def test_add_same_node(self):
 		node = Hamster(0, 0)
